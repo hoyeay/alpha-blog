@@ -1,19 +1,25 @@
+# articles controller
 class ArticlesController < ApplicationController
+  # apply set_article from private to these methods ONLY
+  before_action :set_article, only: [:edit, :update, :show, :destroy]
 
-  def index # list all articles in the Article DB
+  # display all articles
+  def index
     @articles = Article.all
   end
 
-  def new # create a new article for the Article DB
+  # create a new article for the Article DB
+  def new
     @article = Article.new
   end
 
-  def edit # edit an article
-    @article = Article.find(params[:id])
+  # edit an article
+  def edit
   end
 
-  def update # update the article and save
-    @article = Article.find(params[:id])
+  # update the article and save
+  def update
+    set_article
     if @article.update(article_params)
       flash[:notice] = 'Article was successfully updated!'
       redirect_to article_path(@article)
@@ -22,7 +28,8 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def create # create the article and save it to the Article DB
+  # create the article and save it to the Article DB
+  def create
     @article = Article.new(article_params)
     if @article.save
       flash[:notice] = 'Article was successfully created!'
@@ -32,18 +39,22 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def show # show the currently created and saved article
-    @article = Article.find(params[:id])
+  # show the currently created and saved article
+  def show
   end
 
-  def destroy # find and destroy article
-    @article = Article.find(params[:id])
+  # find and destroy article
+  def destroy
     @article.destroy
     flash[:notice] = 'Article was successfully deleted. :('
     redirect_to articles_path
   end
 
   private
+  def set_article
+    @article = Article.find(params[:id])
+  end
+
   def article_params
     params.require(:article).permit(:title, :description)
   end
