@@ -1,4 +1,4 @@
-h1.center
+h1.text-center
   | All Articles
 = link_to 'Create New Article', new_article_path, class: "btn btn-primary btn-lg"
 
@@ -8,15 +8,20 @@ table
       | Title
     th
       | Description
+  / iterate through each article and display its title and description
   - @articles.each do |article|
     tr
       td
         = article.title
+        | &nbsp;
       td
         = article.description
+        | &nbsp;
       td
         = link_to 'Edit', edit_article_path(article)
+        | &nbsp;
       td
         = link_to 'Show', article_path(article)
+        | &nbsp;
       td
         = link_to 'Delete', article_path(article), method: :delete, data: {confirm: 'Are you sure?'}

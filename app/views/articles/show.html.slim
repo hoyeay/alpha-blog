@@ -1,11 +1,17 @@
-h1.center
-  | Showing Selected Article
-p
-  |  Title 
+h2.text-center
+  |  Title: 
   = @article.title
-p
-  |  Description 
-  = @article.description
-= link_to 'Edit this Article', edit_article_path(@article)
-|  | 
-= link_to 'Back to Article Listings', articles_path
+.well.col-xs-8.col-xs-offset-2
+  h4.text-center
+    strong
+      | Description: 
+    hr
+  = simple_format(@article.description)
+  .article-actions
+    = link_to 'Edit this Article', edit_article_path(@article), class: 'btn btn-xs btn-primary'
+    |  | 
+    = link_to 'View all Articles', articles_path, class: 'btn btn-xs btn-success'
+    |  | 
+    = link_to 'Delete this Article', article_path(@article), method: :delete, 
+            data: {confirm: 'Are you sure?'}, class: 'btn btn-xs btn-danger'
+    

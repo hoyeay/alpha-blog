@@ -1,5 +1,6 @@
+/ display the errors partial (_errors.html.slim)
 = render 'shared/errors', obj: @article
-
+/ form to capture article title and article description
 .row
   .col-xs-12
     = form_for(@article, html: {class: 'form-horizontal', roll: 'form'}) do |f|
