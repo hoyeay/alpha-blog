@@ -4,7 +4,7 @@ class ArticlesController < ApplicationController
 
   # display all articles in the Article DB
   def index
-    @articles = Article.all
+    @articles = Article.paginate(page: params[:page], per_page: 5)
   end
 
   # create a new article for the Article DB

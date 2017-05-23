@@ -8,4 +8,8 @@ h1.text-center
 h4.text-center
   = @user.username
   | 's articles
-= render 'articles/article', obj: @user.articles
+.text-center
+  = will_paginate @user_articles
+= render 'articles/article', obj: @user_articles
+.text-center
+  = will_paginate @user_articles
