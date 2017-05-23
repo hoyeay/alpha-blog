@@ -1,0 +1,26 @@
+/ display the errors partial (_errors.html.slim)
+= render 'shared/errors', obj: @user
+/ form to capture article title and article description
+.row
+  .col-xs-12
+    = form_for(@user, html: {class: 'form-horizontal', roll: 'form'}) do |f|
+      .form-group
+        .col-sm-2.control-label
+          = f.label :username
+        .col-sm-8
+          = f.text_field :username, class: 'form-control', placeholder: 'Enter username', autofocus: true
+      .form-group
+        .col-sm-2.control-label
+          = f.label :email
+        .col-sm-8
+          = f.email_field :email, class: 'form-control', placeholder: 'Enter email'
+      .form-group
+        .col-sm-2.control-label
+          = f.label :password
+        .col-sm-8
+          = f.password_field :password, class: 'form-control', placeholder: 'Enter password'
+      .form-group
+        .col-sm-10.col-sm-offset-2
+          = f.submit(@user.new_record? ? 'Sign Up' : "Update Account", class: 'btn btn-primary btn-lg')
+    .col-xs-12.col-xs-offset-5
+      = link_to '[ Return to All Articles ]', articles_path
