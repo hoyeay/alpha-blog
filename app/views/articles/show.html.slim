@@ -2,6 +2,17 @@ h2.text-center
   |  Title: 
   = @article.title
 .well.col-xs-8.col-xs-offset-2
+  - if @article.user
+    ul.text-center.list-unstyled
+      li
+        | Created by: 
+      li
+        = link_to gravatar_for(@article.user), user_path(@article.user)
+      li.article-title
+        = link_to @article.user.username, user_path(@article.user)
+      li
+        small
+          = pluralize(@article.user.articles.count, 'article') if @article.user.articles
   h4.text-center.description
     strong
       | Description: 
