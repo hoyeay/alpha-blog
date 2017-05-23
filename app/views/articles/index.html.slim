@@ -1,27 +1,19 @@
 h1.text-center
   | All Articles
-= link_to 'Create New Article', new_article_path, class: "btn btn-primary btn-lg"
 
-table
-  tr
-    th
-      | Title
-    th
-      | Description
-  / iterate through each article and display its title and description
-  - @articles.each do |article|
-    tr
-      td
-        = article.title
-        | &nbsp;
-      td
-        = article.description
-        | &nbsp;
-      td
-        = link_to 'Edit', edit_article_path(article)
-        | &nbsp;
-      td
-        = link_to 'Show', article_path(article)
-        | &nbsp;
-      td
-        = link_to 'Delete', article_path(article), method: :delete, data: {confirm: 'Are you sure?'}
+/ iterate through each article and display its title, description, and actions
+- @articles.each do |article|
+  .row
+    .col-xs-8.col-xs-offset-2
+      .well.well-lg
+        .article-title
+          = link_to article.title, article_path(article)
+        .article-body
+          = truncate(article.description, length: 100)
+        .article-actions
+          = link_to 'Edit this Article', edit_article_path(article), class: 'btn btn-xs btn-primary'
+          |  
+          = link_to 'Delete this Article', article_path(article), method: :delete,
+                  data: {confirm: 'Are you sure?'},
+                  class: 'btn btn-xs btn-danger'
+          
