@@ -1,6 +1,8 @@
 class ArticlesController < ApplicationController
   # apply set_article from private, below,  to these methods ONLY
   before_action :set_article, only: [:edit, :update, :show, :destroy]
+  before_action :require_user, except: [:index, :show]
+  before_action :require_same_user, only: [:edit, :update, :destroy]
 
   # display all articles in the Article DB
   def index
@@ -17,16 +19,6 @@ class ArticlesController < ApplicationController
   def edit # displays the edit.html.slim page with article form
   end
 
-  # update the article and save
-  def update
-    if @article.update(article_params) # if article is updated
-      flash[:success] = 'Article was successfully updated!' # flash message
-      redirect_to article_path(@article) # redirect to article
-    else
-      render 'edit' # display the edit method/view (edit.html.slim)
-    end
-  end
-
   # create the article and save it to the Article DB
   def create
     @article = Article.new(article_params)
@@ -36,6 +28,16 @@ class ArticlesController < ApplicationController
       redirect_to article_path(@article) # redirect to created article
     else
       render 'new' # display the new method/view (new.html.slim)
+    end
+  end
+
+  # update the article and save
+  def update
+    if @article.update(article_params) # if article is updated
+      flash[:success] = 'Article was successfully updated!' # flash message
+      redirect_to article_path(@article) # redirect to article
+    else
+      render 'edit' # display the edit method/view (edit.html.slim)
     end
   end
 
@@ -52,12 +54,21 @@ class ArticlesController < ApplicationController
 
   # private methods can only be accessed within this class
   private
+  
   # finds the current article id in the Article Db
   def set_article
     @article = Article.find(params[:id]) # obtain the currently Article's id from Article DB
   end
+  
   # permit the title and description params onto the Article DB
   def article_params
     params.require(:article).permit(:title, :description)
+  end
+  
+  def require_same_user
+    if current_user != @article.user
+      flash[:danger] = "Access denied."
+      redirect_to root_path
+    end
   end
 end
