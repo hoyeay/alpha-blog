@@ -1,4 +1,3 @@
-# articles controller
 class ArticlesController < ApplicationController
   # apply set_article from private, below,  to these methods ONLY
   before_action :set_article, only: [:edit, :update, :show, :destroy]
