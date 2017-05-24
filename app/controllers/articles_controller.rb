@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
   # apply set_article from private, below,  to these methods ONLY
-  before_action :set_article, only: [:edit, :update, :show, :destroy]
   before_action :require_user, except: [:index, :show]
+  before_action :set_article, only: [:edit, :update, :show, :destroy]
   before_action :require_same_user, only: [:edit, :update, :destroy]
 
   # display all articles in the Article DB
