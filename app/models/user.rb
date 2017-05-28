@@ -1,9 +1,9 @@
 class User < ActiveRecord::Base
   
   # a user has many associations with articles
-  has_many :articles
+  has_many :articles, dependent: :destroy
   
-  # lowcase email before saving to User DB
+  # lowercase email before saving to User DB
   before_save { self.email = email.downcase }
   
   # validates username

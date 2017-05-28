@@ -4,7 +4,9 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :show]
   
   # applies the require_same_user method to edit and update method
-  before_action :require_same_user, only: [:edit, :update]
+  before_action :require_same_user, only: [:edit, :update, :destroy]
+  
+  before_action :require_admin, only: [:destroy]
   
   # index page for all users
   def index
@@ -31,7 +33,7 @@ class UsersController < ApplicationController
       redirect_to user_path(@user)
     else
       # if user is not saved, render the form again
-      render 'new' # if user doesn't save, render a new user page
+      render 'new'
     end
   end
   
@@ -58,6 +60,13 @@ class UsersController < ApplicationController
     @user_articles = @user.articles.paginate(page: params[:page], per_page: 5)
   end
   
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    flash[:danger] = "User and all articles created by that user deleted."
+    redirect_to users_path
+  end
+  
   # methods that can only be used by the methods of the users_controller class
   private
   
@@ -75,11 +84,19 @@ class UsersController < ApplicationController
   # requires the user editing or updating to be the user
   def require_same_user
     # if the user is on another user's edit or update page
-    if current_user != @user
+    if current_user != @user and !current_user.admin?
       # flash message
       flash[:danger] = "Access denied."
       # and redirect to articles listing
       redirect_to articles_path
+    end
+  end
+  
+  # non-admin users are redirected to root_path
+  def require_admin
+    if logged_in? and !current_user
+      flash[:danger] = "Only admin users can perform that action."
+      redirect_to root_path
     end
   end
 end

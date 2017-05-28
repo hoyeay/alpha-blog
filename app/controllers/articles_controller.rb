@@ -65,8 +65,9 @@ class ArticlesController < ApplicationController
     params.require(:article).permit(:title, :description)
   end
   
+  # if current_user is not article creator and not an admin, redirect to root
   def require_same_user
-    if current_user != @article.user
+    if current_user != @article.user and !current_user.admin?
       flash[:danger] = "Access denied."
       redirect_to root_path
     end

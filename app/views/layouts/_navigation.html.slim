@@ -47,7 +47,8 @@ nav.navbar.navbar-default
             = link_to 'Logout', logout_path, method: :delete
           li.dropdown
             a.dropdown-toggle[href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"]
-              | Profile 
+              = "Admin " if current_user.admin?
+              | Profile
               span.caret
             ul.dropdown-menu
               li

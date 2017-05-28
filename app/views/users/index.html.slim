@@ -13,4 +13,8 @@ h1.text-center
           li
             small 
               = pluralize(user.articles.count, 'article') if user.articles
+        - if logged_in? and current_user.admin?
+          = link_to " Delete User ", user_path(user),
+                  method: :delete,
+                  data: {confirm: "Delete user and all their articles?"}
   = will_paginate
