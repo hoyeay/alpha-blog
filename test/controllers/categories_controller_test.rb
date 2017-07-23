@@ -18,7 +18,9 @@ class CategoriesControllerTest < ActionController::TestCase
   test 'should get new' do
     # simulate logged in user
     session[:user_id] = @user.id
+    # get view for new function
     get :new
+    # did the view appear?
     assert_response :success
   end
   
