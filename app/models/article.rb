@@ -2,6 +2,10 @@ class Article < ActiveRecord::Base
   
   # associate articles to 1 user
   belongs_to :user
+  # associate with many article categories
+  has_many :article_categories
+  # associate with categories through article_categories
+  has_many :categories, through: :article_categories
   
   # Validates article titles and descriptions
   validates :title, presence: true, 
