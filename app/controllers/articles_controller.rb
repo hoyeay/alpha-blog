@@ -62,7 +62,7 @@ class ArticlesController < ApplicationController
   
   # permit the title and description params onto the Article DB
   def article_params
-    params.require(:article).permit(:title, :description)
+    params.require(:article).permit(:title, :description, category_ids: [])
   end
   
   # if current_user is not article creator and not an admin, redirect to root

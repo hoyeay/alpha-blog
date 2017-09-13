@@ -18,6 +18,9 @@
               | Last updated on: 
               = time_ago_in_words(article.updated_at)
               |  ago.
+        - if article.categories.any?
+          p Categories:
+          = render article.categories
         - if logged_in? && (current_user == article.user || current_user.admin?)
           .article-actions
             = link_to 'Edit this Article', edit_article_path(article), class: 'btn btn-xs btn-primary'
